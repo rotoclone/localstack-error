@@ -7,3 +7,4 @@
 1. Change `MAX_THREADS` to 1 in `LocalstackTest`
 1. Run `mvn clean install` again
 1. See no failures
+1. Be confused and sad
