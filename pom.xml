@@ -41,16 +41,9 @@
                         surefire behavior beginning from 2.14. -->
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
-                    <systemProperties>
-                        <property>
-                            <name>concordion.output.dir</name>
-                            <value>target/concordion</value>
-                        </property>
-                    </systemProperties>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
-                    <argLine>-Xmx1024m -Djava.net.preferIPv4Stack=true</argLine>
                 </configuration>
             </plugin>
         </plugins>
