@@ -19,7 +19,7 @@ import cloud.localstack.docker.LocalstackDockerTestRunner;
 import cloud.localstack.docker.annotation.LocalstackDockerProperties;
 
 @RunWith(LocalstackDockerTestRunner.class)
-@LocalstackDockerProperties(randomizePorts = true, services = { "s3" })
+@LocalstackDockerProperties(pullNewImage = true, randomizePorts = true, services = { "s3" })
 public class LocalstackTest {
     private static final String BUCKET_NAME = "test-bucket";
     private static final int ITERATIONS = 5;
