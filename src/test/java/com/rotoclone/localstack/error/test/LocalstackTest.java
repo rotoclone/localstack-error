@@ -1,5 +1,9 @@
 package com.rotoclone.localstack.error.test;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,6 +13,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Executors;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -25,11 +31,32 @@ public class LocalstackTest {
     private static final int ITERATIONS = 5;
     private static final int TOTAL_THREADS = 20;
     private static final int MAX_THREADS = 20;
+    final AmazonS3 s3Client = DockerTestUtils.getClientS3();
+
+    @Before
+    public void setup() {
+        s3Client.createBucket(BUCKET_NAME);
+    }
 
     @Test
-    public void test() {
-        final AmazonS3 s3Client = DockerTestUtils.getClientS3();
-        s3Client.createBucket(BUCKET_NAME);
+    public void testTrailingNewline() {
+        System.out.println("\nTesting put with trailing newline...");
+        final String objectKey = "new/" + UUID.randomUUID() + "/file.txt";
+        final String contents = "hi i'm some data with a trailing newline\n";
+        final ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(contents.getBytes().length);
+        try (final InputStream inputStream = new ByteArrayInputStream(contents.getBytes())) {
+            s3Client.putObject(BUCKET_NAME, objectKey, inputStream, metadata);
+            System.out.println("Success!");
+        } catch (final Exception e) {
+            System.out.println("PutObject request failed: " + e.getMessage());
+            throw new RuntimeException("An error occurred while writing to " + objectKey, e);
+        }
+    }
+
+    @Test
+    public void testParallelWrites() {
+        System.out.println("\nTesting parallel writes...");
 
         int errors = 0;
         for (int i = 0; i < ITERATIONS; i++) {
