@@ -3,7 +3,8 @@
 This project demonstrates 2 errors with localstack.
 
 The first error involves doing many puts in parallel:
-Note: This error has been fixed by https://github.com/localstack/localstack/pull/1217
+
+*Note: This error has been fixed by https://github.com/localstack/localstack/pull/1217*
 
 1. Clone this repo
 1. Make sure Docker is running on your machine
