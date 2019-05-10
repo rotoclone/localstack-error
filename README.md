@@ -15,6 +15,7 @@ The first error involves doing many puts in parallel:
 1. See no errors
 1. Be ~~confused and sad~~ happy
 
+-----
 
 The second error involves doing a put with data that has a trailing newline:
 
