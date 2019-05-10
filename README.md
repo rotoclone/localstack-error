@@ -25,4 +25,5 @@ The second error involves doing a put with data that has a trailing newline:
 1. See an error (`Unable to verify integrity of data upload`)
 1. Remove the trailing newline in the `contents` variable in the `testTrailingNewline` method in `LocalstackTest`
 1. Run `mvn clean install -Dtest=LocalstackTest#testTrailingNewline` again
+1. See no error
 1. Be confused and sad
